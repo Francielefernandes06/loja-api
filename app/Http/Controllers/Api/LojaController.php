@@ -26,7 +26,7 @@ class LojaController extends Controller
     {
 
 
-        $lojas= $this->loja->paginate(10);
+        $lojas= $this->loja->paginate(11);
         return response()->json($lojas);
     }
 
@@ -38,7 +38,10 @@ class LojaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $loja = $this->loja->create($request->all());
+
+
+        return response()->json($loja);
     }
 
     /**
@@ -60,9 +63,11 @@ class LojaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Lojas $loja)
     {
-        //
+
+        $loja->update($request->all());
+        return response()->json($loja);
     }
 
     /**
@@ -73,6 +78,8 @@ class LojaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $loja = $this->loja->find($id);
+        $loja->delete();
+        return response()->json(['data' => ['msg' => 'Loja removida com sucesso!']]);
     }
 }
